@@ -1,0 +1,35 @@
+/**body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.controls input, .controls select, .controls button {
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.controls input:hover, .controls select:hover, .controls button:hover {
+    background-color: #333333;
+}
+
+#chart-container {
+    height: 400px;
+}
+**/

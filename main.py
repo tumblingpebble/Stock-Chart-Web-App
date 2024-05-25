@@ -1,31 +1,31 @@
 from flask import Flask, render_template, request, jsonify
-import openai
-import os
+import yfinance as yf
 
 app = Flask(__name__)
-
-openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/')
 def index():
     return render_template('chart.html')
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    data = request.json
-    image_base64 = data['image']
-    symbol = data['symbol']
+@app.route('/stock-data')
+def stock_data():
+    ticker = request.args.get('ticker')
+    interval = request.args.get('interval')
+    range = request.args.get('range')
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a stock market analyst."},
-            {"role": "user", "content": f"Analyze the following chart for {symbol}:\n![Chart](data:image/png;base64,{image_base64})"}
-        ]
-    )
+    # Fetch the stock data with correct period and interval
+    try:
+        data = yf.download(ticker, period=range, interval=interval)
+        
+        if data.empty:
+            return jsonify({"error": "No data available for this interval"}), 400
 
-    analysis = response['choices'][0]['message']['content']
-    return jsonify({'analysis': analysis})
+        # Format the data for the response
+        formatted_data = [{"time": str(d), "value": v} for d, v in zip(data.index, data['Close'])]
+        return jsonify(formatted_data)
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
