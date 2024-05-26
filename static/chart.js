@@ -18,7 +18,7 @@ const chart = LightweightCharts.createChart(document.getElementById('chart'), {
     watermark: {
         color: 'rgba(0, 0, 0, 0.1)',
         visible: true,
-        text: 'Stock Chart',
+        text: '',
         fontSize: 24,
         horzAlign: 'left',
         vertAlign: 'top',
@@ -28,7 +28,7 @@ const chart = LightweightCharts.createChart(document.getElementById('chart'), {
 const lineSeries = chart.addLineSeries();
 
 function fetchAndRenderData() {
-    const ticker = document.getElementById('ticker').value;
+    const ticker = document.getElementById('ticker').value.toUpperCase();
     const interval = document.getElementById('interval').value;
     const errorMessage = document.getElementById('error-message');
 
@@ -46,6 +46,11 @@ function fetchAndRenderData() {
                 value: item.value
             }));
             lineSeries.setData(formattedData);
+            chart.applyOptions({
+                watermark: {
+                    text: `${ticker} Stock Chart`,
+                },
+            });
         })
         .catch(error => {
             console.error('Error fetching data:', error);
