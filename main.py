@@ -11,12 +11,23 @@ def index():
 def stock_data():
     ticker = request.args.get('ticker')
     interval = request.args.get('interval')
-    range = request.args.get('range')
 
-    # Fetch the stock data with correct period and interval
+    # Determine the period based on the interval
+    if interval == '1m':
+        period = '5d'  # Yahoo Finance allows only 7 days for 1m interval
+    elif interval in ['5m', '15m', '30m', '1h']:
+        period = '60d'  # Yahoo Finance allows up to 60 days for these intervals
+    elif interval == '1d':
+        period = 'max'
+    elif interval in ['1wk', '1mo']:
+        period = 'max'
+    else:
+        return jsonify({"error": "Invalid interval"}), 400
+
     try:
-        data = yf.download(ticker, period=range, interval=interval)
-        
+        # Fetch the stock data
+        data = yf.download(ticker, period=period, interval=interval)
+
         if data.empty:
             return jsonify({"error": "No data available for this interval"}), 400
 

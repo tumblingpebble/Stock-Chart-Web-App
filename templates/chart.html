@@ -13,23 +13,6 @@
             color: red;
             display: none;
         }
-        .range-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .range-buttons input {
-            display: none;
-        }
-        .range-buttons label {
-            padding: 10px 20px;
-            background-color: #ddd;
-            cursor: pointer;
-        }
-        .range-buttons input:checked + label {
-            background-color: #333;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -39,37 +22,16 @@
         <label for="interval">Interval:</label>
         <select id="interval">
             <option value="1m">1 Minute</option>
-            <option value="2m">2 Minutes</option>
             <option value="5m">5 Minutes</option>
             <option value="15m">15 Minutes</option>
             <option value="30m">30 Minutes</option>
             <option value="1h">1 Hour</option>
-            <option value="4h">4 Hours</option>
+            <option value="1d">1 Day</option>
+            <option value="1wk">1 Week</option>
+            <option value="1mo">1 Month</option>
         </select>
         <button id="updateChart">Update Chart</button>
         <p id="error-message"></p>
-    </div>
-    <div class="range-buttons">
-        <input type="radio" id="1d" name="range" value="1d" checked>
-        <label for="1d">1D</label>
-        <input type="radio" id="5d" name="range" value="5d">
-        <label for="5d">5D</label>
-        <input type="radio" id="1mo" name="range" value="1mo">
-        <label for="1mo">1M</label>
-        <input type="radio" id="3mo" name="range" value="3mo">
-        <label for="3mo">3M</label>
-        <input type="radio" id="6mo" name="range" value="6mo">
-        <label for="6mo">6M</label>
-        <input type="radio" id="ytd" name="range" value="ytd">
-        <label for="ytd">YTD</label>
-        <input type="radio" id="1y" name="range" value="1y">
-        <label for="1y">1Y</label>
-        <input type="radio" id="2y" name="range" value="2y">
-        <label for="2y">2Y</label>
-        <input type="radio" id="5y" name="range" value="5y">
-        <label for="5y">5Y</label>
-        <input type="radio" id="max" name="range" value="max">
-        <label for="max">MAX</label>
     </div>
     <div id="chart"></div>
     <script src="/static/chart.js"></script>

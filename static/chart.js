@@ -30,10 +30,9 @@ const lineSeries = chart.addLineSeries();
 function fetchAndRenderData() {
     const ticker = document.getElementById('ticker').value;
     const interval = document.getElementById('interval').value;
-    const range = document.querySelector('input[name="range"]:checked').value;
     const errorMessage = document.getElementById('error-message');
 
-    fetch(`/stock-data?ticker=${ticker}&interval=${interval}&range=${range}`)
+    fetch(`/stock-data?ticker=${ticker}&interval=${interval}`)
         .then(response => {
             if (!response.ok) {
                 return response.json().then(error => { throw new Error(error.error); });
@@ -60,6 +59,3 @@ fetchAndRenderData();
 
 document.getElementById('updateChart').addEventListener('click', fetchAndRenderData);
 document.getElementById('interval').addEventListener('change', fetchAndRenderData);
-document.querySelectorAll('input[name="range"]').forEach((elem) => {
-    elem.addEventListener('change', fetchAndRenderData);
-});
